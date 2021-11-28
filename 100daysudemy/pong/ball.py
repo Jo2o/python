@@ -9,4 +9,4 @@ class Ball(Turtle):
         self.shape("circle") #self.shape(BALL_IMAGE)
         self.color("white")
         self.penup()
-        self.speed(8)
+        self.speed(3)
