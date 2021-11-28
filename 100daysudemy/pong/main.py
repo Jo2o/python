@@ -1,12 +1,16 @@
 from turtle import Turtle, Screen
-import paddle
 import ball
+import paddle
+from ballmover import BallMover
+
+TABLE_WIDTH_HALF = 712
+TABLE_HEIGHT_HALF = 345
 
 def setup_screen(screen):
     screen.title("PING-PONG   >>> Jo2o <<<")
     screen.colormode(255)
     screen.bgcolor(0, 35, 35)
-    screen.setup(width=1424, height=790, startx=None, starty=50)
+    screen.setup(width = TABLE_WIDTH_HALF * 2, height = TABLE_HEIGHT_HALF * 2, startx=None, starty=50)
 
 def setup_net():
     net = Turtle()
@@ -54,19 +58,38 @@ def setup_score(screen):
     screen.tracer(1)
     return left_score, right_score
 
+def is_game_over():
+    return (ball.xcor() > TABLE_WIDTH_HALF + 50) or (ball.xcor() < -TABLE_WIDTH_HALF - 50)
+
+def should_bounce():
+    return abs(ball.ycor()) >= TABLE_HEIGHT_HALF - 20 \
+           or (paddle_left.distance(ball.xcor(), ball.ycor()) < 60) \
+           or (paddle_right.distance(ball.xcor(), ball.ycor()) < 60)
+
+def ball_move():
+    ball.forward(15)
+    screen.ontimer(ball_move, 1)
+
 
 screen = Screen()
 setup_screen(screen)
 setup_net()
 setup_score(screen)
 
-b = setup_ball(screen)
+ball = setup_ball(screen)
 (paddle_left, paddle_right) = setup_paddles(screen)
 
+ballmover = BallMover(ball)
+ballmover.toss()
+ball_move()
+
 screen.listen()
-# game_over = False
-# while not game_over:
-#     pass
+
+
+while not is_game_over():
+    screen.update()
+    if should_bounce():
+        ball.setheading(ball.heading() + 180)
 
 
 

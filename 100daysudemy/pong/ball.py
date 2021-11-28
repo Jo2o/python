@@ -6,9 +6,7 @@ class Ball(Turtle):
 
     def __init__(self):
         super().__init__()
-        self.shape(BALL_IMAGE)
+        self.shape("circle") #self.shape(BALL_IMAGE)
+        self.color("white")
         self.penup()
-        # self.goto(100, 100)
-
-
-
+        self.speed(8)
