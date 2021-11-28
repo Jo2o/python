@@ -13,7 +13,7 @@ class BallMover:
         self.ball = ball
 
     def get_angle_deviation(self, angle):
-        return angle + randint(int(-angle/10), int(angle/10))
+        return angle + randint(int(-angle/5), int(angle/5))
 
     def toss(self):
         self.ball.setheading(randint(0, 359))
@@ -36,7 +36,7 @@ class BallMover:
 
         if quadrant == Quadrant.ONE:
             if self.is_leftright_side_collision(current_x, current_y, table_width_half, table_height_half):
-                return self.get_angle_deviation(current_angle)
+                return 180 - self.get_angle_deviation(current_angle)
             else:
                 return -self.get_angle_deviation(current_angle)
         elif quadrant == Quadrant.TWO:
@@ -46,11 +46,11 @@ class BallMover:
                 return (180 - self.get_angle_deviation(current_angle)) + 180
         elif quadrant == Quadrant.THREE:
             if self.is_leftright_side_collision(current_x, current_y, table_width_half, table_height_half):
-                return (270 - self.get_angle_deviation(current_angle)) + 270
+                return self.get_angle_deviation((270 - current_angle)) + 270
             else:
                 return 180 - self.get_angle_deviation(current_angle - 180)
         elif quadrant == Quadrant.FOUR:
             if self.is_leftright_side_collision(current_x, current_y, table_width_half, table_height_half):
-                return 270 - (self.get_angle_deviation(current_angle) - 270)
+                return 270 - self.get_angle_deviation(current_angle - 270)
             else:
                 return self.get_angle_deviation(360 - current_angle)

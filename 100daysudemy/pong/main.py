@@ -72,9 +72,9 @@ def is_game_over():
     return (abs(ball.xcor()) > TABLE_WIDTH_HALF)
 
 def should_bounce():
-    return abs(ball.ycor()) >= TABLE_HEIGHT_HALF - 30 \
-           or (paddle_left.distance(ball.xcor(), ball.ycor()) < 80) \
-           or (paddle_right.distance(ball.xcor(), ball.ycor()) < 80)
+    return (abs(ball.ycor()) >= TABLE_HEIGHT_HALF - 40) \
+           or ((-paddle_left.xcor() + ball.xcor() < 20) and (paddle_left.ycor() - ball.ycor() < 110)) \
+           or ((paddle_right.xcor() - ball.xcor() < 20) and (paddle_right.ycor() - ball.ycor() < 110))
 
 def ball_move():
     ball.forward(10)
